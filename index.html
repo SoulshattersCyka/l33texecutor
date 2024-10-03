@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Remote Event Trigger</title>
+    </head>
+    <body>
+        <input id="usernameBox" type="text" placeholder="Enter Username">
+        <input id="codeBox" type="text" placeholder="Enter Code to Execute">
+        <button id="executeBtn">Send Request</button>
+        <p id="statusLabel" hidden></p>
+
+        <script>
+            const URL = '/executeRequest';
+            const OK_RESPONSE = 200;
+
+            const usernameBox = document.getElementById('usernameBox');
+            const codeBox = document.getElementById('codeBox');
+            const executeBtn = document.getElementById('executeBtn');
+            const statusLabel = document.getElementById('statusLabel');
+
+            async function sendExecuteRequest() {
+                const response = await fetch(URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        username: usernameBox.value,
+                        code: codeBox.value
+                    })
+                });
+
+                statusLabel.hidden = false;
+                if (response.status == OK_RESPONSE) {
+                    statusLabel.innerText = `Successfully sent request for ${usernameBox.value}.`
+                } else {
+                    statusLabel.innerText = `Failed to send request.`
+                }
+            }
+
+            executeBtn.onclick = sendExecuteRequest;
+        </script>
+    </body>
+</html>
