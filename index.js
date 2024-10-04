@@ -1,3 +1,5 @@
+
+
 const express = require("express");
 const EventEmitter = require("events").EventEmitter;
 
@@ -17,9 +19,6 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/index.html");
-});
 
 app.post("/executeRequest", (req, res) => {
   const { username, code } = req.body; // Get username and code from the request body
